@@ -9,7 +9,7 @@
 [![Kali Linux](https://img.shields.io/badge/Platform-Kali_Linux-557C94?style=flat-square&logo=kalilinux&logoColor=white)](https://kali.org)
 [![Flask](https://img.shields.io/badge/Web-Flask-000000?style=flat-square&logo=flask)](https://flask.palletsprojects.com/)
 
-使用大语言模型驱动三模块协作架构实现端到端自动化渗透测试*
+使用大语言模型驱动三模块协作架构实现端到端自动化渗透测试
 
 **[快速开始](#-快速开始) · [Web 界面](#-web-仪表盘) · [架构设计](#-系统架构) · [配置说明](#-配置) · [安全声明](#-安全声明)**
 
