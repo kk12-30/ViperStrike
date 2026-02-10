@@ -154,46 +154,124 @@ security:
 export OPENAI_API_KEY="your-api-key-here"
 ```
 
-### 启动
+## 启动方式
 
-#### Web 模式（推荐）
+### Web 模式（推荐）
+
+启动赛博朋克风格 Web 仪表盘，支持项目管理、实时监控、报告生成等。
 
 ```bash
-python -m src.main web --port 5000
+./viperstrike web --port 5000
 ```
 
-浏览器打开 `http://localhost:5000`，在 Web 界面中管理项目和执行扫描。
+**使用方式：**
+- 浏览器打开 `http://localhost:5000`
+- 在 Web 界面中创建项目、配置参数、执行扫描
+- 实时查看进度、发现、操作日志、系统监控
+- 在线修改配置、生成报告、下载报告
 
-#### 命令行模式
+**可选参数：**
 
 ```bash
-# 创建新项目并启动扫描
-python -m src.main start -n "TestProject" -t 192.168.1.100 -s 192.168.1.0/24
-
-# 恢复已有项目
-python -m src.main resume -p <project_id>
-
-# 查看项目列表
-python -m src.main projects
-
-# 查看 PTT 状态
-python -m src.main tree -p <project_id>
-
-# 生成报告
-python -m src.main report -p <project_id>
+./viperstrike web --port 8080           # 指定端口（默认 5000）
+./viperstrike web --host 0.0.0.0        # 指定监听地址（默认 0.0.0.0）
+./viperstrike web --config /path/to/config.yaml  # 指定配置文件
 ```
 
-#### 交互式模式
+---
+
+### 命令行模式
+
+#### 创建新项目并启动扫描
 
 ```bash
-python -m src.main interactive
+./viperstrike start \
+  --name "TestProject" \
+  --target 192.168.1.100 \
+  --scope 192.168.1.0/24 \
+  --max-iterations 50
+```
 
-viperstrike > new TestProject 192.168.1.100
+**参数说明：**
+- `--name, -n` — 项目名称
+- `--target, -t` — 目标 IP/域名/URL
+- `--scope, -s` — 授权范围（可多次指定）
+- `--max-iterations, -m` — 最大迭代次数（默认 50）
+- `--config, -c` — 配置文件路径
+- `--web` — 同时启动 Web 仪表盘
+- `--web-port` — Web 仪表盘端口（默认 5000）
+
+**示例：**
+
+```bash
+# 基础扫描
+./viperstrike start -n "MyTest" -t 192.168.1.100
+
+# 指定多个授权范围
+./viperstrike start -n "MyTest" -t 192.168.1.100 -s 192.168.1.0/24 -s 10.0.0.0/8
+
+# 启动扫描并同时打开 Web 仪表盘
+./viperstrike start -n "MyTest" -t 192.168.1.100 --web --web-port 5000
+```
+
+---
+
+### 交互式模式
+
+启动交互式命令行界面，支持实时交互和人工指导。
+
+```bash
+./viperstrike interactive
+```
+
+---
+
+## 常见用法
+
+### 场景 1：快速 Web 扫描
+
+```bash
+# 启动 Web 仪表盘
+./viperstrike web --port 5000
+
+# 浏览器访问 http://localhost:5000
+# 在界面中创建项目、配置参数、点击启动扫描
+```
+
+### 场景 2：自动化扫描（无交互）
+
+```bash
+# 创建项目并自动扫描
+./viperstrike start -n "AutoTest" -t 192.168.1.100 -s 192.168.1.0/24 -m 100
+
+# 扫描完成后生成报告
+./viperstrike report -p <project_id>
+```
+
+### 场景 3：中断恢复
+
+```bash
+# 启动扫描（可按 Ctrl+C 中断）
+./viperstrike start -n "MyTest" -t 192.168.1.100
+
+# 查看项目列表，获取 project_id
+./viperstrike projects
+
+# 恢复扫描
+./viperstrike resume -p <project_id>
+```
+
+### 场景 4：人工指导
+
+```bash
+# 启动交互式模式
+./viperstrike interactive
+
+viperstrike > load abc123def456
 viperstrike > start
-viperstrike > tree
-viperstrike > guide "尝试对80端口进行SQL注入"
-viperstrike > pause
-viperstrike > resume
+# [扫描运行中...]
+viperstrike > guide "尝试对 SQL 注入进行深度利用"
+# [AI 根据指导调整策略]
 viperstrike > findings
 viperstrike > report
 viperstrike > quit
