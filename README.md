@@ -1,7 +1,7 @@
 <div align="center">
 
 # 🐍 ViperStrike
-
+# 获取工具源码：https://m-wiki.freebuf.com/clubsPoster?id=410&invite_code=2ebc0444
 ### LLM-Driven Automated Penetration Testing System
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
